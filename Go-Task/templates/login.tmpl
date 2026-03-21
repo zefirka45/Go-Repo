@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ .title}}</title>
+    <style>
+        body { font-family: Arial, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #f0f2f5; }
+        .login-container { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .login-container h2 { text-align: center; }
+        .login-container input { display: block; width: 100%; margin: 10px 0; padding: 10px; box-sizing: border-box; }
+        .login-container button { width: 100%; padding: 10px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2>Вход</h2>
+        <form action="/login" method="post">
+            <input type="text" name="username" placeholder="Логин" required>
+            <input type="password" name="password" placeholder="Пароль" required>
+            <button type="submit">Войти</button>
+            <p style="text-align: center; font-size: 14px; margin-top: 15px;">
+            	Создать аккаунт? <a href="/register" style="color: #007bff; text-decoration: none;">Регистрация</a>
+        	</p>
+        	{{ if .error }}
+        		<p style="color: red;">{{ .error }}</p>
+        	{{ end }}
+        </form>
+    </div>
+</body>
+</html>
