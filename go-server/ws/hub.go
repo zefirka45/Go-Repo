@@ -13,6 +13,7 @@ type message struct {
 	To   string `json:"to"`
 	Text string `json:"text"`
 }
+
 type Hub struct {
 	//Регистрируем клиента
 	clients map[string]*Client
@@ -53,7 +54,6 @@ func (h *Hub) Run() {
 					log.Printf("error marshaling message: %v", err)
 					continue
 				}
-
 				select {
 				case targetClient.send <- payload:
 				default:

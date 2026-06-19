@@ -7,6 +7,7 @@ package ws
 import (
 	"bytes"
 	"encoding/json"
+	"go-server/jwt"
 	"log"
 	"time"
 
@@ -134,11 +135,19 @@ func (c *Client) writePump() {
 // serveWs обрабатывает запросы WebSocket от удаленного узла.
 func ServeWs(hub *Hub, c *gin.Context) {
 	// Пример получения ID: /ws?userId=user123
-	userID := c.Query("userId")
-	if userID == "" {
+	token := c.Query("token")
+	claims, err := jwt.ValidateToken(token)
+	if err != nil {
 		log.Println("Rejecting connection: userId is required")
 		c.JSON(400, gin.H{"error": "userId query param is required"})
 		return
+	}
+
+	userID, ok := claims["id"].(string)
+	if !ok {
+		log.Println("Rejecting connection: 'id' claim is missing or not a string")
+		c.JSON(400, gin.H{"error": "Bad Request: invalid token payload"})
+		return // Обязательно прерываем выполнение хендлера!
 	}
 
 	conn, err := upgrader.Upgrade(c.Writer, c.Request, nil)

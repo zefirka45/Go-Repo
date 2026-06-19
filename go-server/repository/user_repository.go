@@ -44,15 +44,16 @@ func (r *UserRepo) GetUserByCredentials(userlogin, password string) (*config.Use
 	if !matched {
 		return nil, errors.New("invalid password")
 	}
+
 	return &user, nil
 
 }
 
-func (r *UserRepo) GetByID(id uint) (*config.Users, error) {
-	var user config.Users
-	err := r.db.First(&user, id).Error
-	if err != nil {
-		return nil, err
-	}
-	return &user, nil
-}
+// func (r *UserRepo) GetByID(id uint) (*config.Users, error) {
+// 	var user config.Users
+// 	err := r.db.First(&user, id).Error
+// 	if err != nil {
+// 		return nil, err
+// 	}
+// 	return &user, nil
+// }

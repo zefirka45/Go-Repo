@@ -66,3 +66,7 @@ func (h *UserHandler) GetUser(c *gin.Context) {
 		"token": token,
 	})
 }
+
+func WsUserValid() {
+
+}
